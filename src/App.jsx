@@ -11,6 +11,21 @@ const App = () => {
 
     return (
         <>
+        <CssBaseline />
+            <Box sx={{ background: '#DEF1FF' }}>
+                <Header search={search} setSearch={setSearch} setCoords={setCoords} />
+                <CurrencyConverter />
+                <Weather currenData={currenWeather} dailyData={dailyWeather} />
+                <List
+                    placesData={filteredPlaces.length ? filteredPlaces : places}
+                    type={type}
+                    setType={setType}
+                    rating={rating}
+                    setRating={setRating}
+                    isLoading={isLoading}
+                />
+                <Footer />
+            </Box>
         </>
     );
 };
