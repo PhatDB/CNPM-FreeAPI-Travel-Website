@@ -35,3 +35,16 @@ export const getCurrencyConvert = async (codeFromCurrency, codeToCurrency) => {
         console.log(error);
     }
 };
+
+export const getCurrenWeatherData = async (coords) => {
+    try {
+        const { data } = await axios(
+            `${WEATHER_BASE_URL}weather?lat=${coords.lat}&lon=${
+                coords.lon
+            }&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
+        );
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
