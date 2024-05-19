@@ -23,6 +23,18 @@ const App = () => {
     const [type, setType] = useState("restaurants");
     const [rating, setRating] = useState("");
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [filteredPlaces, setFilteredPlaces] = useState([]);
+
+    useEffect(() => {
+        getCurrenWeatherData(coords).then((data) => {
+            setCurrenWeather([data]);
+        });
+        getDailyWeatherData(coords).then((data) => {
+            setDailyWeather(data.list);
+        });
+    }, [coords]);
+
     return (
         <>
             <CssBaseline />
