@@ -23,12 +23,12 @@ export const getCitiesData = async (inputValue) => {
     }
 };
 
-export const getCurrencyConvert = async (codeFromCurrency, codeToCurrency) => {
+export const getCurrenWeatherData = async (coords) => {
     try {
         const { data } = await axios(
-            `https://v6.exchangerate-api.com/v6/${
-                import.meta.env.VITE_EXCHANGERATE_API_KEY
-            }/pair/${codeFromCurrency}/${codeToCurrency}`
+            `${WEATHER_BASE_URL}weather?lat=${coords.lat}&lon=${
+                coords.lon
+            }&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
         );
         return data;
     } catch (error) {
@@ -36,12 +36,50 @@ export const getCurrencyConvert = async (codeFromCurrency, codeToCurrency) => {
     }
 };
 
-export const getCurrenWeatherData = async (coords) => {
+export const getDailyWeatherData = async (coords) => {
     try {
         const { data } = await axios(
-            `${WEATHER_BASE_URL}weather?lat=${coords.lat}&lon=${
+            `${WEATHER_BASE_URL}forecast?lat=${coords.lat}&lon=${
                 coords.lon
             }&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
+        );
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getPlacesData = async (coords, type) => {
+    try {
+        const {
+            data: { data },
+        } = await axios(
+            `https://travel-advisor.p.rapidapi.com/${type}/list-by-latlng`,
+            {
+                params: {
+                    latitude: coords.lat,
+                    longitude: coords.lon,
+                    limit: "30",
+                },
+                headers: {
+                    "X-RapidAPI-Key": import.meta.env
+                        .VITE_TRAVEL_ADVISOR_API_KEY,
+                    "X-RapidAPI-Host": "travel-advisor.p.rapidapi.com",
+                },
+            }
+        );
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getCurrencyConvert = async (codeFromCurrency, codeToCurrency) => {
+    try {
+        const { data } = await axios(
+            `https://v6.exchangerate-api.com/v6/${
+                import.meta.env.VITE_EXCHANGERATE_API_KEY
+            }/pair/${codeFromCurrency}/${codeToCurrency}`
         );
         return data;
     } catch (error) {
